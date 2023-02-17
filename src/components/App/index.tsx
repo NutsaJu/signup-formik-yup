@@ -47,6 +47,7 @@ const SignUpSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").required("Required"),
   email: Yup.string()
     .lowercase()
+    .matches(/(^[a-zA-Z][-_.a-zA-Z0-9]{5,29}@g(oogle)?mail.com$)/, 'Must be a valid email')
     .email("Must be a valid email")
     .notOneOf(emailAdresses, "Email already taken")
     .required("Required"),
