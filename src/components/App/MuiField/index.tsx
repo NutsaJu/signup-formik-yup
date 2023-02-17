@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import { FormHelperText, TextField } from "@material-ui/core";
 import { Field, ErrorMessage } from "formik";
 
 interface MuiFieldProps {
@@ -20,8 +20,8 @@ const MuiField: React.FC<MuiFieldProps> = ({ name, label, type = "text", require
         autoComplete="off"
         name={name}
         type={type}
-        helperText={<ErrorMessage name={name} />}
       />
+      <FormHelperText className="Mui-error" ><ErrorMessage name={name}></ErrorMessage></FormHelperText>
     </div>
   );
 };

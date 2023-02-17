@@ -42,7 +42,7 @@ const MuiSelectField: React.FC<MuiSelectFieldProps> = ({
       <Select name={name} onChange={onChange} onBlur={onBlur} value={value}>
         {children}
       </Select>
-      <FormHelperText>{errorString}</FormHelperText>
+      <FormHelperText className="Mui-error">{errorString}</FormHelperText>
     </FormControl>
   );
 };
