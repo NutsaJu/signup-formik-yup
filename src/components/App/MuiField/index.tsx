@@ -1,13 +1,7 @@
 import React from "react";
 import { FormHelperText, TextField } from "@material-ui/core";
 import { Field, ErrorMessage } from "formik";
-
-interface MuiFieldProps {
-  name: string;
-  label: string;
-  type?: string;
-  required?: boolean
-}
+import { MuiFieldProps } from "../../../type";
 
 const MuiField: React.FC<MuiFieldProps> = ({ name, label, type = "text", required="false" }) => {
   return (
