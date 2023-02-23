@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -10,7 +10,9 @@ import {
   useAllUserQuery,
 } from "../../features/apiSlice";
 import { User } from "../../type";
-import { Box, LinearProgress } from "@material-ui/core";
+import { LinearProgress } from "@material-ui/core";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const initialValues: User = {
   name: "",
@@ -54,11 +56,11 @@ const App: React.FC = () => {
       console.log(err);
     }
   };
-
+  //
   const emailAdresses: string[] | undefined = allUserArray?.users?.map(
     (item: any) => item?.email
   );
-
+  //
   const SignUpSchema = Yup.object().shape({
     name: Yup.string().min(2, "Too Short!").required("Required"),
     email: Yup.string()
@@ -81,7 +83,24 @@ const App: React.FC = () => {
       .required("Required"),
     position: Yup.string().required("Required"),
   });
-
+  //
+  const [visible, setVisible] = useState(false);
+  const Icon = (
+    <FontAwesomeIcon
+      icon={visible ? faEyeSlash : faEye}
+      onClick={() => setVisible((visible) => !visible)}
+    />
+  );
+  const InputType = visible ? "text" : "password";
+  //
+  const [PassVisible, SetPassVisible] = useState(false);
+  const PassIcon = (
+    <FontAwesomeIcon
+      icon={PassVisible ? faEyeSlash : faEye}
+      onClick={() => SetPassVisible((PassVisible) => !PassVisible)}
+    />
+  );
+  const PassInputType = PassVisible ? "text" : "password";
   //
   const mainLoading = isCreateUserLoading || isAllUserLoading;
   //
@@ -104,18 +123,24 @@ const App: React.FC = () => {
               <Wrapper>
                 <MuiField label="Name" name="name" required />
                 <MuiField label="Email" name="email" required />
-                <MuiField
-                  label="Password"
-                  name="password"
-                  type="password"
-                  required
-                />
-                <MuiField
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  type="password"
-                  required
-                />
+                <Box>
+                  <MuiField
+                    label="Password"
+                    name="password"
+                    type={InputType}
+                    required
+                  />
+                  <Span>{Icon}</Span>
+                </Box>
+                <Box>
+                  <MuiField
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    type={PassInputType}
+                    required
+                  />
+                  <Span>{PassIcon}</Span>
+                </Box>
                 <MuiSelect
                   name="position"
                   items={PositionItems}
@@ -158,4 +183,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 35px;
+`;
+
+const Box = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const Span = styled.span`
+  position: absolute;
+  top: 20px;
+  right: 8px;
 `;
